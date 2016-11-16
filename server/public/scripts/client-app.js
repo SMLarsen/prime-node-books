@@ -1,8 +1,10 @@
 $(document).ready(function () {
-    getBooks();
-
+    // getBooks();
+    console.log('document ready');
     // add a book
-    $('#book-submit').on('click', postBook);
+    $('#book-add').on('click', postBook);
+    // get books
+    $('#book-submit').on('click', getBooks);
     // delete a book
     $("#book-list").on('click', '.delete', deleteBook);
     // update a book
@@ -12,9 +14,11 @@ $(document).ready(function () {
  * Retrieve books from server and append to DOM
  */
 function getBooks() {
+  var selectedGenre = $(".genre").val();
+  console.log(selectedGenre);
   $.ajax({
     type: 'GET',
-    url: '/books',
+    url: '/books/' + selectedGenre,
     success: function(books) {
       appendBooks(books);
     },
@@ -22,7 +26,7 @@ function getBooks() {
       console.log('Database error');
     }
 
-  })
+  });
 }
 /**
  * Add a new book to the database and refresh the DOM
@@ -38,7 +42,7 @@ function postBook() {
   // convert edition to integer
   book.edition = parseInt(book.edition);
 
-  console.log('book: ', book);
+  // console.log('book: ', book);
 
   $.ajax({
     type: 'POST',
@@ -50,7 +54,7 @@ function postBook() {
     error: function() {
       console.log('could not post a new book');
     }
-  })
+  });
 
 }
 
@@ -80,7 +84,7 @@ function updateBook() {
   fields.forEach(function(field) {
     book[field.name] = field.value;
   });
-  console.log(book);
+  // console.log(book);
 
   $.ajax({
     type: 'PUT',
@@ -105,7 +109,7 @@ function appendBooks(books) {
     $el = $('#book-list').children().last();
     var book = books[i];
     $el.data('id', book.id);
-    console.log("Date from DB: ", book.published);
+    // console.log("Date from DB: ", book.published);
 
     // convert the date
     // book.date = new Date(book.published);
@@ -117,13 +121,13 @@ function appendBooks(books) {
     // console.log(convertedDate);
 
     var convertedDate = book.published.substr(0, 10);
-    console.log(convertedDate);
+    // console.log(convertedDate);
 
     $el.append('<input type="text" name="title" value="' + book.title + '" />');
     $el.append('<input type="text" name="author" value="' + book.author + '" />');
     $el.append('<input type="text" name="genre" value="' + book.genre + '" />');
     var newDate = $('<input type="date" name="published" />');
-    newDate.val(convertedDate)
+    newDate.val(convertedDate);
     $el.append(newDate);
     $el.append('<input type="number" name="edition" value="' + book.edition + '" />');
     $el.append('<input type="text" name="publisher" value="' + book.publisher + '" />');
