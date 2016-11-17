@@ -17,7 +17,7 @@ router.get('/genreList', function(req, res) {
         }
 
         client.query(
-            'SELECT DISTINCT genre FROM books',
+            'SELECT genre FROM books GROUP BY genre',
             function(err, result) {
                 done(); // close the connection.
 
@@ -46,36 +46,36 @@ router.get('/:genre', function(req, res) {
             res.sendStatus(500);
         }
 
-        if (genreFilter === 'All') {
-          client.query(
-              'SELECT * FROM books',
-              function(err, result) {
-                  done(); // close the connection.
+        if (genreFilter === 'All') {  // select ALL books
+            client.query(
+                'SELECT * FROM books',
+                function(err, result) {
+                    done(); // close the connection.
 
-                  if (err) {
-                      console.log('select query error: ', err);
-                      res.sendStatus(500);
-                  }
-                  console.log(result.rows);
-                  res.send(result.rows);
-              });
+                    if (err) {
+                        console.log('select query error: ', err);
+                        res.sendStatus(500);
+                    }
+                    console.log(result.rows);
+                    res.send(result.rows);
+                });
 
-    } else {
-          client.query(
-              'SELECT * FROM books WHERE genre = $1 ', [genreFilter],
-              function(err, result) {
-                  done(); // close the connection.
+        } else { // select books by genre
+            client.query(
+                'SELECT * FROM books WHERE genre = $1 ', [genreFilter],
+                function(err, result) {
+                    done(); // close the connection.
 
-                  if (err) {
-                      console.log('select query error: ', err);
-                      res.sendStatus(500);
-                  }
-                  console.log(result.rows);
-                  res.send(result.rows);
-              }
-          );
-    }
-  });
+                    if (err) {
+                        console.log('select query error: ', err);
+                        res.sendStatus(500);
+                    }
+                    console.log(result.rows);
+                    res.send(result.rows);
+                }
+            );
+        }
+    });
 }); // end get books by genre
 
 // Route: Post new book
@@ -100,10 +100,8 @@ router.post('/', function(req, res) {
                     res.sendStatus(201);
                 }
             });
-
     });
-
-});  // end post new book
+}); // end post new book
 
 // Route: delete book
 router.delete('/:id', function(req, res) {

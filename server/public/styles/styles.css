@@ -1,41 +1,42 @@
 body {
-  background-color: 	#EEE8AA;
+    background-color: #58aede;
 }
 
 h1 {
-  font-family: 'Taviraj', serif;
-  color: indigo;
+    font-family: 'Taviraj', serif;
+    color: indigo;
 }
 
 h2 {
-  color: gray;
-}
-
-.book {
-  border: 1px solid grey;
-  margin-bottom: 12px;
-  padding: 10px;
-  box-shadow: 5px 5px 2px grey;
-  border-radius: 5px;
-  background-color: #8FBC8F;
-}
-
-#filters {
-  margin-bottom: 15px;
+    color: gray;
 }
 
 select {
-  height: 30px;
-}
-
-.bookInput {
-  margin: 5px;
+    height: 30px;
 }
 
 button {
-  margin: 0 10px;
+    margin: 0 10px;
+}
+
+.book {
+    border: 1px solid grey;
+    margin-bottom: 12px;
+    padding: 10px;
+    box-shadow: 5px 5px 2px grey;
+    border-left: 6px ridge grey;
+    background-color: #8FBC8F;
+    border-right: 5px double #EEE8AA;
+}
+
+.bookInput {
+    margin: 5px;
+}
+
+#filters {
+    margin-bottom: 15px;
 }
 
 #inputSection {
-  border-bottom: 1px solid grey;
+    border-bottom: 1px solid grey;
 }

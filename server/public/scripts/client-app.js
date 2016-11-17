@@ -101,6 +101,7 @@ function updateBook() {
         data: book,
         success: function(result) {
             console.log('updated!!!!');
+            getGenres();
             getBooks();
         },
         error: function(result) {
@@ -162,6 +163,7 @@ function getGenres() {
  * Append select options to DOM
  */
 function buildGenreSelection(genreList) {
+  $('#genreDropdown').empty();
   console.log('genreList', genreList);
   $('#genreDropdown').append('<option value="All">All</option>');
 
