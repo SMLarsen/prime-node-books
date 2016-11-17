@@ -1,3 +1,7 @@
+body {
+  background-color: 	#EEE8AA;
+}
+
 h1 {
   font-family: 'Taviraj', serif;
   color: indigo;
@@ -8,7 +12,30 @@ h2 {
 }
 
 .book {
-  border: 1px solid magenta;
+  border: 1px solid grey;
   margin-bottom: 12px;
   padding: 10px;
+  box-shadow: 5px 5px 2px grey;
+  border-radius: 5px;
+  background-color: #8FBC8F;
+}
+
+#filters {
+  margin-bottom: 15px;
+}
+
+select {
+  height: 30px;
+}
+
+.bookInput {
+  margin: 5px;
+}
+
+button {
+  margin: 0 10px;
+}
+
+#inputSection {
+  border-bottom: 1px solid grey;
 }

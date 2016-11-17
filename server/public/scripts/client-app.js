@@ -123,16 +123,19 @@ function appendBooks(books) {
     var convertedDate = book.published.substr(0, 10);
     // console.log(convertedDate);
 
-    $el.append('<input type="text" name="title" value="' + book.title + '" />');
-    $el.append('<input type="text" name="author" value="' + book.author + '" />');
-    $el.append('<input type="text" name="genre" value="' + book.genre + '" />');
-    var newDate = $('<input type="date" name="published" />');
+    $el.append('<div class="row">');
+    $el.append('<input class="bookInput col-md-6" type="text" name="title" value="' + book.title + '" />');
+    $el.append('<input class="bookInput col-md-5" type="text" name="author" value="' + book.author + '" />');
+    $el.append('</div><div class="row">');
+    $el.append('<input class="bookInput col-md-2" type="text" name="genre" value="' + book.genre + '" />');
+    var newDate = $('<input class="bookInput col-md-3" type="date" name="published" />');
     newDate.val(convertedDate);
     $el.append(newDate);
-    $el.append('<input type="number" name="edition" value="' + book.edition + '" />');
-    $el.append('<input type="text" name="publisher" value="' + book.publisher + '" />');
+    $el.append('<input class="bookInput col-md-1" type="number" name="edition" value="' + book.edition + '" />');
+    $el.append('<input  class="bookInput col-md-3"type="text" name="publisher" value="' + book.publisher + '" />');
 
-    $el.append('<button class="update">Update</button>');
-    $el.append('<button class="delete">Delete</button>');
+    $el.append('<button class="bookInput update btn btn-default col-md-offset-1">Update</button>');
+    $el.append('<button class="bookInput delete btn btn-default">Delete</button>');
+    $el.append('</div>');
   }
 }
