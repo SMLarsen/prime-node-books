@@ -25,9 +25,11 @@ router.get('/genreList', function(req, res) {
                     console.log('select query error: ', err);
                     res.sendStatus(500);
                 }
+
                 console.log(result.rows);
                 res.send(result.rows);
-            });
+            }
+        );
     });
 }); // end get genres
 
@@ -35,6 +37,7 @@ router.get('/genreList', function(req, res) {
 router.get('/:genre', function(req, res) {
     var genreFilter = req.params.genre;
     console.log('get request for:', genreFilter);
+
     // get books from DB
     pg.connect(connectionString, function(err, client, done) {
         console.log('connection started');
@@ -43,19 +46,36 @@ router.get('/:genre', function(req, res) {
             res.sendStatus(500);
         }
 
-        client.query(
-            'SELECT * FROM books WHERE genre = $1 ', [genreFilter],
-            function(err, result) {
-                done(); // close the connection.
+        if (genreFilter === 'All') {
+          client.query(
+              'SELECT * FROM books',
+              function(err, result) {
+                  done(); // close the connection.
 
-                if (err) {
-                    console.log('select query error: ', err);
-                    res.sendStatus(500);
-                }
-                console.log(result.rows);
-                res.send(result.rows);
-            });
-    });
+                  if (err) {
+                      console.log('select query error: ', err);
+                      res.sendStatus(500);
+                  }
+                  console.log(result.rows);
+                  res.send(result.rows);
+              });
+
+    } else {
+          client.query(
+              'SELECT * FROM books WHERE genre = $1 ', [genreFilter],
+              function(err, result) {
+                  done(); // close the connection.
+
+                  if (err) {
+                      console.log('select query error: ', err);
+                      res.sendStatus(500);
+                  }
+                  console.log(result.rows);
+                  res.send(result.rows);
+              }
+          );
+    }
+  });
 }); // end get books by genre
 
 // Route: Post new book
@@ -106,7 +126,8 @@ router.delete('/:id', function(req, res) {
                 } else {
                     res.sendStatus(200);
                 }
-            });
+            }
+        );
     });
 
 }); // end delete book
